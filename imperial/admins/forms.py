@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery, FeaturedEvent
+from .models import Portfolio, Gallery, FeaturedEvent, Testimonial
 
 class PortfolioForm(forms.ModelForm):
 
@@ -39,13 +39,6 @@ class GalleryForm(forms.ModelForm):
             'alt_text': forms.TextInput(attrs={'class': 'input-field'}),
         }
         
-        
-        
-from django import forms
-from .models import FeaturedEvent
-
-from django import forms
-from .models import FeaturedEvent
 
 class FeaturedEventForm(forms.ModelForm):
 
@@ -72,4 +65,17 @@ class FeaturedEventForm(forms.ModelForm):
             }),
             'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'checkbox-field'}),
+        }
+        
+
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = ['name', 'role', 'text', 'image', 'stars']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'input-field'}),
+            'role': forms.TextInput(attrs={'class': 'input-field'}),
+            'text': forms.Textarea(attrs={'class': 'input-field', 'rows': 4}),
+            'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
+            'stars': forms.NumberInput(attrs={'class': 'input-field', 'min': 1, 'max': 5}),
         }

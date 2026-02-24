@@ -858,7 +858,6 @@
                   {{ event.guests }}+ Guests | {{ event.event_date|date:"d M Y" }}
                 </p>
               </div>
-
             </div>
             {% endfor %}
 
@@ -963,6 +962,23 @@
           </div>
           
           <div class="testimonial-cards reveal">
+            {% for t in testimonials %}
+            <div class="testimonial-card">
+              <div class="testimonial-stars" style="margin-bottom: 10px;">
+                {% for i in "12345"|slice:":t.stars"|make_list %}
+                    <ion-icon name="star" style="color: #fbb034;"></ion-icon>
+                {% endfor %}
+            </div>
+              <p class="testimonial-text">"{{ t.text }}"</p>
+              <div class="testimonial-user">
+                <img src="{{ t.image.url }}" alt="{{ t.name }}" />
+                <div>
+                  <h4>{{ t.name }}</h4>
+                  <span>{{ t.role }}</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
             <!-- Card 1 -->
             <div class="testimonial-card">
               <div class="testimonial-stars">

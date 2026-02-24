@@ -15,5 +15,8 @@ urlpatterns = [
     path('custom-admin/featured/', views.manage_featured, name='manage_featured'),
     path('custom-admin/featured/edit/<int:pk>/', views.manage_featured, name='edit_featured'),
     path('custom-admin/featured/delete/<int:pk>/', views.delete_featured, name='delete_featured'),
+    path('custom-admin/testimonials/', views.admin_testimonials, name='admin_testimonials'),
+    path('custom-admin/testimonials/edit/<int:pk>/', views.admin_testimonials, name='edit_testimonial'),
+    path('custom-admin/testimonials/delete/<int:pk>/', views.delete_testimonial, name='delete_testimonial'),
     
 ]

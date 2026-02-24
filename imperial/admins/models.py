@@ -74,3 +74,16 @@ class FeaturedEvent(models.Model):
 
     def __str__(self):
         return self.title
+    
+    
+# Testimonial
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100, blank=True)
+    text = models.TextField()
+    image = models.ImageField(upload_to='testimonials/')
+    stars = models.PositiveSmallIntegerField(default=5)  # 1 to 5
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

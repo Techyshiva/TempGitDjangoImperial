@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Portfolio, Gallery, FeaturedEvent
-from .forms import PortfolioForm, GalleryForm, FeaturedEventForm
+from .models import Portfolio, Gallery, FeaturedEvent, Testimonial
+from .forms import PortfolioForm, GalleryForm, FeaturedEventForm, TestimonialForm
 
 # Create your views here.
 def admin_home(request):
@@ -102,3 +102,33 @@ def delete_featured(request, pk):
     event = get_object_or_404(FeaturedEvent, pk=pk)
     event.delete()
     return redirect("manage_featured")
+
+
+# Testimonial
+
+def admin_testimonials(request, pk=None):
+    testimonials = Testimonial.objects.all().order_by('-created_at')
+
+    if pk:
+        obj = get_object_or_404(Testimonial, pk=pk)
+    else:
+        obj = None
+
+    if request.method == 'POST':
+        form = TestimonialForm(request.POST, request.FILES, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_testimonials')
+    else:
+        form = TestimonialForm(instance=obj)
+
+    return render(request, 'testimonials_admin.html', {
+        'form': form,
+        'testimonials': testimonials,
+        'edit_mode': True if pk else False
+    })
+
+def delete_testimonial(request, pk):
+    obj = get_object_or_404(Testimonial, pk=pk)
+    obj.delete()
+    return redirect('admin_testimonials')
