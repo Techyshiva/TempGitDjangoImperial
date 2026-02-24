@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery
+from .models import Portfolio, Gallery, FeaturedEvent
 
 class PortfolioForm(forms.ModelForm):
 
@@ -37,4 +37,39 @@ class GalleryForm(forms.ModelForm):
         widgets = {
             'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
             'alt_text': forms.TextInput(attrs={'class': 'input-field'}),
+        }
+        
+        
+        
+from django import forms
+from .models import FeaturedEvent
+
+from django import forms
+from .models import FeaturedEvent
+
+class FeaturedEventForm(forms.ModelForm):
+
+    class Meta:
+        model = FeaturedEvent
+        fields = [
+            'title',
+            'category',
+            'custom_category',
+            'guests',
+            'event_date',
+            'image',
+            'is_active'
+        ]
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'input-field'}),
+            'category': forms.Select(attrs={'class': 'input-field'}),
+            'custom_category': forms.TextInput(attrs={'class': 'input-field'}),
+            'guests': forms.NumberInput(attrs={'class': 'input-field'}),
+            'event_date': forms.DateInput(attrs={
+                'class': 'input-field',
+                'type': 'date'
+            }),
+            'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'checkbox-field'}),
         }

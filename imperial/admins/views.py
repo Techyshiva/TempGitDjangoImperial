@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Portfolio, Gallery
-from .forms import PortfolioForm, GalleryForm
+from .models import Portfolio, Gallery, FeaturedEvent
+from .forms import PortfolioForm, GalleryForm, FeaturedEventForm
 
 # Create your views here.
 def admin_home(request):
@@ -66,3 +66,39 @@ def delete_gallery(request, pk):
     image = get_object_or_404(Gallery, pk=pk)
     image.delete()
     return redirect('admin_gallery')
+
+# Featured events From Home page
+
+def manage_featured(request, pk=None):
+
+    events = FeaturedEvent.objects.all().order_by('-created_at')
+
+    if pk:
+        event_obj = get_object_or_404(FeaturedEvent, pk=pk)
+    else:
+        event_obj = None
+
+    if request.method == "POST":
+        form = FeaturedEventForm(request.POST, request.FILES, instance=event_obj)
+        if form.is_valid():
+            event = form.save(commit=False)
+
+            if event.category != "custom":
+                event.custom_category = None
+
+            event.save()
+            return redirect("manage_featured")
+    else:
+        form = FeaturedEventForm(instance=event_obj)
+
+    return render(request, "featured_admin.html", {
+        "form": form,
+        "events": events,
+        "edit_mode": True if pk else False
+    })
+    
+    
+def delete_featured(request, pk):
+    event = get_object_or_404(FeaturedEvent, pk=pk)
+    event.delete()
+    return redirect("manage_featured")

@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from admins.models import Portfolio, Gallery
+from admins.models import Portfolio, Gallery, FeaturedEvent
 # Create your views here.
 def home(request):
-    return render(request, "main/index.html")
+    featured_events = FeaturedEvent.objects.filter(is_active=True).order_by('-created_at')
 
+    return render(request, "main/index.html", {
+        "featured_events": featured_events
+    })
 def about(request):
     return render(request, "main/about.html")
 

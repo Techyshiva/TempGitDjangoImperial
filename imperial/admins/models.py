@@ -44,3 +44,33 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.alt_text if self.alt_text else "Gallery Image"
+    
+    
+class FeaturedEvent(models.Model):
+
+    CATEGORY_CHOICES = [
+        ('wedding', 'Wedding'),
+        ('corporate', 'Corporate'),
+        ('social', 'Social'),
+        ('custom', 'Custom'),
+    ]
+
+    title = models.CharField(max_length=200)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    custom_category = models.CharField(max_length=100, blank=True, null=True)
+
+    guests = models.IntegerField()
+    event_date = models.DateField()
+
+    image = models.ImageField(upload_to='featured_events/')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_display_category(self):
+        if self.category == "custom" and self.custom_category:
+            return self.custom_category
+        return dict(self.CATEGORY_CHOICES).get(self.category)
+
+    def __str__(self):
+        return self.title

@@ -1,6 +1,10 @@
 # Python
 __pycache__/
 *.pyc
+admins/__pycache__/
+admins/migrations/__pycache__/
+main/__pycache__/
+main/migrations/__pycache__/
 
 # Django
 db.sqlite3
