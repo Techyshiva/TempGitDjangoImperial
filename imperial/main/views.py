@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from admins.models import Portfolio, Gallery
 # Create your views here.
 def home(request):
     return render(request, "main/index.html")
@@ -32,7 +32,8 @@ def faq(request):
     return render(request, "main/FAQ.html")
 
 def gallery(request):
-    return render(request, "main/gallery.html")
+    images = Gallery.objects.all().order_by('-created_at')
+    return render(request, "main/gallery.html", {'images': images})
 
 def plan_event(request):
     return render(request, "main/plan-event.html")
@@ -44,7 +45,8 @@ def product_launch(request):
     return render(request, "main/product_launch.html")
 
 def portfolio(request):
-    return render(request, "main/portfolio.html")
+    portfolios = Portfolio.objects.all().order_by('-created_at')
+    return render(request, "main/portfolio.html", {'portfolios': portfolios})
 
 def services(request):
     return render(request, "main/services.html")

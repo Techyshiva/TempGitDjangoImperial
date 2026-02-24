@@ -211,7 +211,18 @@
 </section>
 
 <section class="gallery">
+
   <div class="gridbox reveal max-width">
+    {% for img in images %}
+    <div class="gallery-card">
+      <img
+        src="{{ img.image.url }}"
+        alt="{{ img.alt_text }}"
+        class="card-img"
+      />
+    </div>
+    {% endfor %}
+
     <div class="gallery-card">
       <img
         src="{% static 'images/material/gallery/gallery01.jpg' %}"

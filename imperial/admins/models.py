@@ -1,3 +1,46 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
+
+# Portfolio
+class Portfolio(models.Model):
+
+    CATEGORY_CHOICES = [
+        ('wedding', 'Wedding'),
+        ('corporate', 'Corporate'),
+        ('social', 'Social'),
+        ('custom', 'Custom'),
+    ]
+
+    title = models.CharField(max_length=200)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    custom_category = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to='portfolio/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def clean(self):
+        if self.category == 'custom' and not self.custom_category:
+            raise ValidationError("Custom category is required.")
+
+        if self.category != 'custom' and self.custom_category:
+            raise ValidationError("Do not fill custom category unless category is Custom.")
+
+    def get_display_category(self):
+        if self.category == 'custom':
+            return self.custom_category
+        return dict(self.CATEGORY_CHOICES).get(self.category)
+
+    def __str__(self):
+        return self.title
+    
+    
+# Gallery
+
+class Gallery(models.Model):
+    image = models.ImageField(upload_to='gallery/')
+    alt_text = models.CharField(max_length=200, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.alt_text if self.alt_text else "Gallery Image"

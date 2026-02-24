@@ -177,6 +177,19 @@
 
 <section class="portfolio">
   <div class="gridbox reveal max-width">
+    {% for portfolio in portfolios %}
+    <div class="portfolio-card">
+        <img src="{{ portfolio.image.url }}" class="card-img">
+        <div class="card-overlay">
+            <span class="card-category">
+                {{ portfolio.get_display_category }}
+            </span>
+            <h3 class="card-title">
+                {{ portfolio.title }}
+            </h3>
+        </div>
+    </div>
+    {% endfor %}
     <div class="portfolio-card">
       <img
         src="{% static 'images/material/protfolio/portfolio01.webp' %}"
