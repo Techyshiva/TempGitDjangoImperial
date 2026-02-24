@@ -44,3 +44,27 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.alt_text if self.alt_text else "Gallery Image"
+    
+# About 
+
+class TeamMember(models.Model):
+    name = models.CharField(max_length=150)
+    role = models.CharField(max_length=150)
+    image = models.ImageField(upload_to='team/')
+    linkedin_url = models.URLField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    
+    
+class JobOpening(models.Model):
+    title = models.CharField(max_length=255)
+    time_place = models.CharField(max_length=255, help_text="e.g. Full-time • Remote")
+    experience = models.CharField(max_length=100, help_text="e.g. 3+ years experience")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+        

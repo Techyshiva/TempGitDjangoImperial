@@ -1,17 +1,26 @@
 from django.shortcuts import render
-from admins.models import Portfolio, Gallery
+from admins.models import Portfolio, Gallery, TeamMember, JobOpening
 # Create your views here.
 def home(request):
     return render(request, "main/index.html")
 
 def about(request):
-    return render(request, "main/about.html")
+    team_members = TeamMember.objects.filter(is_active=True).order_by('-created_at')
+
+    return render(request, "main/about.html", {
+        'team_members': team_members
+    })
 
 def blog(request):
     return render(request, "main/blog.html")
 
-def career(request):
-    return render(request, "main/carrer.html")
+
+def career_page(request):
+    jobs = JobOpening.objects.all().order_by('-created_at')
+    return render(request, 'main/carrer.html', {'jobs': jobs})
+    
+    
+
 
 def contact(request):
     return render(request, "main/contact.html")

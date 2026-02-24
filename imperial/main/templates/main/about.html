@@ -464,6 +464,18 @@
       </h2>
 
       <div class="team-row">
+        
+            {% for member in team_members %}
+            {% if member.is_active %}
+            <a href="{{ member.linkedin_url }}" class="team-card reveal" target="_blank">
+                <img src="{{ member.image.url }}" alt="{{ member.name }}" />
+                <h3>{{ member.name }}</h3>
+                <p>{{ member.role }}</p>
+            </a>
+            {% endif %}
+            {% endfor %}
+
+
         <a href="https://www.linkedin.com/in/mhaskeshivam/" class="team-card reveal" target="_blank">
           <img src="{% static 'images/material/about/profile/shivam.png' %}" alt="Shivam Mhaske" />
           <h3>Shivam Mhaske</h3>

@@ -6,3 +6,17 @@ __pycache__/
 db.sqlite3
 media/
 .venv/
+
+
+# Python
+_pycache_/
+*.pyc
+admins/_pycache_/
+admins/migrations/_pycache_/
+main/_pycache_/
+main/migrations/_pycache_/
+
+# Django
+db.sqlite3
+media/
+.venv/

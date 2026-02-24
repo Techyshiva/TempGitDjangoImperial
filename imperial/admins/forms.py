@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery
+from .models import Portfolio, Gallery, TeamMember , JobOpening
 
 class PortfolioForm(forms.ModelForm):
 
@@ -37,4 +37,24 @@ class GalleryForm(forms.ModelForm):
         widgets = {
             'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
             'alt_text': forms.TextInput(attrs={'class': 'input-field'}),
+        }
+        
+        
+ 
+
+class TeamMemberForm(forms.ModelForm):
+    class Meta:
+        model = TeamMember
+        fields = ['name', 'role', 'image', 'linkedin_url', 'is_active']
+        
+ 
+
+class JobOpeningForm(forms.ModelForm):
+    class Meta:
+        model = JobOpening
+        fields = ['title', 'time_place', 'experience']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Job Title'}),
+            'time_place': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Full-time • Remote'}),
+            'experience': forms.TextInput(attrs={'class': 'input-field', 'placeholder': '3+ years experience'}),
         }
