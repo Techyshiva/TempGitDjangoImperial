@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Portfolio, Gallery,TeamMember,JobOpening,Facility
-from .forms import PortfolioForm, GalleryForm, TeamMemberForm, JobOpeningForm, FacilityForm
+from .models import Portfolio, Gallery,TeamMember,JobOpening,Facility ,Blog
+from .forms import PortfolioForm, GalleryForm, TeamMemberForm, JobOpeningForm, FacilityForm, BlogForm
 
 # Create your views here.
 def admin_home(request):
@@ -171,3 +171,26 @@ def delete_facility(request, pk):
     facility = get_object_or_404(Facility, pk=pk)
     facility.delete()
     return redirect('admin_facilities')
+
+def admin_blog(request, pk=None):
+    posts = Blog.objects.all().order_by('-created_at')
+    blog_obj = get_object_or_404(Blog, pk=pk) if pk else None
+
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES, instance=blog_obj)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_blog')
+    else:
+        form = BlogForm(instance=blog_obj)
+
+    return render(request, 'blog_admin.html', {
+        'form': form,
+        'posts': posts,
+        'edit_mode': True if pk else False
+    })
+
+def delete_blog(request, pk):
+    post = get_object_or_404(Blog, pk=pk)
+    post.delete()
+    return redirect('admin_blog')

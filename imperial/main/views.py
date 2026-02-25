@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from admins.models import Portfolio, Gallery, TeamMember, JobOpening,Facility
+from admins.models import Portfolio, Gallery, TeamMember, JobOpening,Facility,Blog
 # Create your views here.
 def home(request):
     return render(request, "main/index.html")
@@ -12,7 +12,8 @@ def about(request):
     })
 
 def blog(request):
-    return render(request, "main/blog.html")
+    posts = Blog.objects.all().order_by('-date')
+    return render(request, "main/blog.html", {'posts': posts})
 
 
 def career_page(request):

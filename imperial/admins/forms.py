@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility
+from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility , Blog
 
 class PortfolioForm(forms.ModelForm):
 
@@ -68,4 +68,16 @@ class FacilityForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Stage & Lighting'}),
             'description': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Professional stage design...'}),
             'icon_name': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'bulb-outline'}),
+        }
+        
+        
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ['image', 'title', 'description', 'date']
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
+            'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Blog Title'}),
+            'description': forms.Textarea(attrs={'class': 'input-field', 'placeholder': 'Short description...', 'rows': 3}),
+            'date': forms.DateInput(attrs={'class': 'input-field', 'type': 'date'}),
         }

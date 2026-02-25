@@ -18,5 +18,8 @@ urlpatterns = [
     path('custom-admin/facilities/', views.admin_facilities, name='admin_facilities'),
     path('custom-admin/facilities/edit/<int:pk>/', views.admin_facilities, name='edit_facility'),
     path('custom-admin/facilities/delete/<int:pk>/', views.delete_facility, name='delete_facility'),
+    path('custom-admin/blog/', views.admin_blog, name='admin_blog'),
+    path('custom-admin/blog/edit/<int:pk>/', views.admin_blog, name='edit_blog'),
+    path('custom-admin/blog/delete/<int:pk>/', views.delete_blog, name='delete_blog'),
     
 ]
