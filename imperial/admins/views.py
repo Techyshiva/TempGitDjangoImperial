@@ -392,7 +392,6 @@ def admin_inquiry(request):
     contact_msgs = ContactEnquiry.objects.all().order_by('-created_at')
     return render(request, 'admin_inquiry.html', {'contact_msgs': contact_msgs})
 
-# 3. DELETE: Remove a message
 @user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_inquiry(request, pk):
     msg = get_object_or_404(ContactEnquiry, pk=pk)
@@ -402,9 +401,8 @@ def delete_inquiry(request, pk):
 
 
 
-
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 def admin_login(request):
@@ -428,3 +426,8 @@ def admin_login(request):
             messages.error(request, "Invalid credentials or you do not have admin access.")
             
     return render(request, 'login.html') # Replace with your actual login HTML file name
+
+
+def admin_logout(request):
+    logout(request)
+    return redirect('admin_login')
