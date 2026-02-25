@@ -4,10 +4,24 @@ from .forms import PortfolioForm, GalleryForm, TeamMemberForm, JobOpeningForm, F
 from main.models import EventBooking, ContactEnquiry
 
 
+
+from django.contrib.auth.decorators import user_passes_test
+
+# This function checks if the user is allowed
+def is_admin(user):
+    return user.is_authenticated and user.is_staff
+
+# Apply this decorator to ALL your custom admin views
+@user_passes_test(is_admin, login_url='/admin/login/') 
+def dashboard_view(request):
+    return render(request, 'admin_home.html')
+
 # Create your views here.
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_home(request):
     return render(request, "admin_home.html")
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_portfolio(request, pk=None):
 
     portfolios = Portfolio.objects.all().order_by('-created_at')
@@ -33,6 +47,7 @@ def admin_portfolio(request, pk=None):
 
     return render(request, 'portfolio_admin.html', context)
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_portfolio(request, pk):
     portfolio = get_object_or_404(Portfolio, pk=pk)
     portfolio.delete()
@@ -41,6 +56,7 @@ def delete_portfolio(request, pk):
 
 # Gallery
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_gallery(request, pk=None):
 
     images = Gallery.objects.all().order_by('-created_at')
@@ -64,6 +80,7 @@ def admin_gallery(request, pk=None):
         'edit_mode': True if pk else False
     })
     
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_gallery(request, pk):
     image = get_object_or_404(Gallery, pk=pk)
     image.delete()
@@ -71,6 +88,7 @@ def delete_gallery(request, pk):
 
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def team_admin(request):
     members = TeamMember.objects.all().order_by('-created_at')
 
@@ -89,6 +107,7 @@ def team_admin(request):
     return render(request, 'admin_team.html', context)
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def edit_team(request, pk):
     member = get_object_or_404(TeamMember, pk=pk)
     members = TeamMember.objects.all()
@@ -109,12 +128,14 @@ def edit_team(request, pk):
     return render(request, 'admin_team.html', context)
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_team(request, pk):
     member = get_object_or_404(TeamMember, pk=pk)
     member.delete()
     return redirect('team_admin')
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def about(request):
     team_members = TeamMember.objects.filter(is_active=True)
 
@@ -123,6 +144,7 @@ def about(request):
     })
     
     
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_careers(request, pk=None):
     jobs = JobOpening.objects.all().order_by('-created_at')
     
@@ -145,12 +167,14 @@ def admin_careers(request, pk=None):
         'edit_mode': True if pk else False
     })
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_job(request, pk):
     job = get_object_or_404(JobOpening, pk=pk)
     job.delete()
     return redirect('admin_careers')
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_facilities(request, pk=None):
     facilities = Facility.objects.all().order_by('-created_at')
     facility_obj = get_object_or_404(Facility, pk=pk) if pk else None
@@ -169,11 +193,13 @@ def admin_facilities(request, pk=None):
         'edit_mode': True if pk else False
     })
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_facility(request, pk):
     facility = get_object_or_404(Facility, pk=pk)
     facility.delete()
     return redirect('admin_facilities')
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_blog(request, pk=None):
     posts = Blog.objects.all().order_by('-created_at')
     blog_obj = get_object_or_404(Blog, pk=pk) if pk else None
@@ -192,11 +218,13 @@ def admin_blog(request, pk=None):
         'edit_mode': True if pk else False
     })
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_blog(request, pk):
     post = get_object_or_404(Blog, pk=pk)
     post.delete()
     return redirect('admin_blog')
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_faq(request, pk=None):
     faqs = FAQ.objects.all().order_by('-created_at')
     faq_obj = get_object_or_404(FAQ, pk=pk) if pk else None
@@ -215,12 +243,14 @@ def admin_faq(request, pk=None):
         'edit_mode': True if pk else False
     })
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_faq(request, pk):
     faq = get_object_or_404(FAQ, pk=pk)
     faq.delete()
     return redirect('admin_faq')
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_terms(request, pk=None):
     terms_list = Term.objects.all().order_by('order')
     term_obj = get_object_or_404(Term, pk=pk) if pk else None
@@ -239,12 +269,14 @@ def admin_terms(request, pk=None):
         'edit_mode': True if pk else False
     })
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_term(request, pk):
     term = get_object_or_404(Term, pk=pk)
     term.delete()
     return redirect('admin_terms')
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_privacy(request, pk=None):
     policies = PrivacyPolicy.objects.all().order_by('order')
     policy_obj = get_object_or_404(PrivacyPolicy, pk=pk) if pk else None
@@ -263,12 +295,14 @@ def admin_privacy(request, pk=None):
         'edit_mode': True if pk else False
     })
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_privacy(request, pk):
     policy = get_object_or_404(PrivacyPolicy, pk=pk)
     policy.delete()
     return redirect('admin_privacy')
 # Featured events From Home page
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def manage_featured(request, pk=None):
 
     events = FeaturedEvent.objects.all().order_by('-created_at')
@@ -298,6 +332,7 @@ def manage_featured(request, pk=None):
     })
     
     
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_featured(request, pk):
     event = get_object_or_404(FeaturedEvent, pk=pk)
     event.delete()
@@ -306,6 +341,7 @@ def delete_featured(request, pk):
 
 # Testimonial
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_testimonials(request, pk=None):
     testimonials = Testimonial.objects.all().order_by('-created_at')
 
@@ -328,6 +364,7 @@ def admin_testimonials(request, pk=None):
         'edit_mode': True if pk else False
     })
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_testimonial(request, pk):
     obj = get_object_or_404(Testimonial, pk=pk)
     obj.delete()
@@ -335,11 +372,13 @@ def delete_testimonial(request, pk):
 
 
 # main/views.py
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_bookings(request):
     bookings = EventBooking.objects.all().order_by('-created_at')
     return render(request, 'admin_bookings.html', {'bookings': bookings})
 
 # 3. DELETE: Remove a booking and refresh the page
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_booking(request, pk):
     booking = get_object_or_404(EventBooking, pk=pk)
     booking.delete()
@@ -348,12 +387,44 @@ def delete_booking(request, pk):
 
 
 
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def admin_inquiry(request):
     contact_msgs = ContactEnquiry.objects.all().order_by('-created_at')
     return render(request, 'admin_inquiry.html', {'contact_msgs': contact_msgs})
 
 # 3. DELETE: Remove a message
+@user_passes_test(is_admin, login_url='/admin/login/') 
 def delete_inquiry(request, pk):
     msg = get_object_or_404(ContactEnquiry, pk=pk)
     msg.delete()
     return redirect('admin_inquiry')
+
+
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+def admin_login(request):
+    # If the user is already logged in and is an admin, send them to the dashboard
+    if request.user.is_authenticated and request.user.is_staff:
+        return redirect('admin_home') # Replace with your dashboard's URL name
+
+    if request.method == 'POST':
+        user_name = request.POST.get('username')
+        pass_word = request.POST.get('password')
+        
+        # Authenticate checks the database for a matching user/password
+        user = authenticate(request, username=user_name, password=pass_word)
+        
+        # Check if user exists AND has staff/admin privileges
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect('admin_home') # Replace with your dashboard's URL name
+        else:
+            # If standard user tries to log in, or wrong password
+            messages.error(request, "Invalid credentials or you do not have admin access.")
+            
+    return render(request, 'login.html') # Replace with your actual login HTML file name
