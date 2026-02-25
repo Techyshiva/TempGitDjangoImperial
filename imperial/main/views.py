@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from admins.models import Portfolio, Gallery, TeamMember, JobOpening
+from admins.models import Portfolio, Gallery, TeamMember, JobOpening,Facility
 # Create your views here.
 def home(request):
     return render(request, "main/index.html")
@@ -35,7 +35,8 @@ def exhibition(request):
     return render(request, "main/exhibition.html")
 
 def facilities(request):
-    return render(request, "main/facilities.html")
+    facilities_list = Facility.objects.all().order_by('-created_at')
+    return render(request, "main/facilities.html", {'facilities': facilities_list})
 
 def faq(request):
     return render(request, "main/FAQ.html")

@@ -283,6 +283,20 @@
 <section class="facilities">
   <div class="facilities-container max-width">
     <div class="facilities-cards">
+
+      {% for f in facilities %}
+      <div class="facilities-card reveal">
+        <div class="facilities-card-icon">
+          <ion-icon name="{{ f.icon_name }}"></ion-icon>
+        </div>
+        <div class="facilities-card-name">
+          <h1>{{ f.title }}</h1>
+          <span>{{ f.description }}</span>
+        </div>
+      </div>
+      {% endfor %}
+
+      
       
       <div class="facilities-card reveal">
         <div class="facilities-card-icon">

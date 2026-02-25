@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery, TeamMember , JobOpening
+from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility
 
 class PortfolioForm(forms.ModelForm):
 
@@ -57,4 +57,15 @@ class JobOpeningForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Job Title'}),
             'time_place': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Full-time • Remote'}),
             'experience': forms.TextInput(attrs={'class': 'input-field', 'placeholder': '3+ years experience'}),
+        }
+        
+        
+class FacilityForm(forms.ModelForm):
+    class Meta:
+        model = Facility
+        fields = ['title', 'description', 'icon_name']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Stage & Lighting'}),
+            'description': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Professional stage design...'}),
+            'icon_name': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'bulb-outline'}),
         }

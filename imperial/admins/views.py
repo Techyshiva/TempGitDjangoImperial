@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Portfolio, Gallery,TeamMember,JobOpening
-from .forms import PortfolioForm, GalleryForm, TeamMemberForm, JobOpeningForm
+from .models import Portfolio, Gallery,TeamMember,JobOpening,Facility
+from .forms import PortfolioForm, GalleryForm, TeamMemberForm, JobOpeningForm, FacilityForm
 
 # Create your views here.
 def admin_home(request):
@@ -147,3 +147,27 @@ def delete_job(request, pk):
     job = get_object_or_404(JobOpening, pk=pk)
     job.delete()
     return redirect('admin_careers')
+
+
+def admin_facilities(request, pk=None):
+    facilities = Facility.objects.all().order_by('-created_at')
+    facility_obj = get_object_or_404(Facility, pk=pk) if pk else None
+
+    if request.method == 'POST':
+        form = FacilityForm(request.POST, instance=facility_obj)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_facilities')
+    else:
+        form = FacilityForm(instance=facility_obj)
+
+    return render(request, 'facilities_admin.html', {
+        'form': form,
+        'facilities': facilities,
+        'edit_mode': True if pk else False
+    })
+
+def delete_facility(request, pk):
+    facility = get_object_or_404(Facility, pk=pk)
+    facility.delete()
+    return redirect('admin_facilities')

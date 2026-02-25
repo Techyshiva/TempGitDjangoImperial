@@ -15,5 +15,8 @@ urlpatterns = [
     path('custom-admin/careers/', views.admin_careers, name='admin_careers'),
     path('custom-admin/careers/edit/<int:pk>/', views.admin_careers, name='edit_job'),
     path('custom-admin/careers/delete/<int:pk>/', views.delete_job, name='delete_job'),
+    path('custom-admin/facilities/', views.admin_facilities, name='admin_facilities'),
+    path('custom-admin/facilities/edit/<int:pk>/', views.admin_facilities, name='edit_facility'),
+    path('custom-admin/facilities/delete/<int:pk>/', views.delete_facility, name='delete_facility'),
     
 ]
