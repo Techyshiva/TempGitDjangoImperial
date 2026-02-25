@@ -107,8 +107,23 @@
 
 <section class="term-section">
   <div class="term-container reveal max-width">
+    
+
     <div class="term-container-box">
-      <p class="term-update-date">Last updated: January 29, 2026</p>
+
+
+      {% if terms_list %}
+        <p class="term-update-date">Last updated: {{ terms_list.0.created_at|date:"F d, Y" }}</p>
+      {% endif %}
+      
+      {% for t in terms_list %}
+      <div class="term-box-point">
+        <h1>{{t.id}} .{{ t.title }}</h1>
+        <p>{{ t.content }}</p>
+      </div>
+      {% endfor %}
+
+      
       
       <div class="term-box-point">
         <h1>1. Agreement to Terms</h1>

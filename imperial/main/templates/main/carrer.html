@@ -247,7 +247,23 @@
 <section class="careers-section">
   <div class="career-wrapper max-width">
     <div class="career-container container-max-width">
+
+
       <h2 class="career-title reveal">Current Openings</h2>
+
+      {% for job in jobs %}
+      <div class="career-job-card reveal">
+        <div class="career-job-card-info">
+          <h3>{{ job.title }}</h3>
+          <p class="time-place">{{ job.time_place }}</p>
+          <p class="exp">{{ job.experience }}</p>
+        </div>
+        <button class="career-job-apply-btn">Apply</button>
+      </div>
+      {% empty %}
+      <p>No current openings. Check back soon!</p>
+      {% endfor %}
+
       
       <div class="career-job-card reveal">
         <div class="career-job-card-info">

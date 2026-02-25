@@ -44,3 +44,75 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.alt_text if self.alt_text else "Gallery Image"
+    
+# About 
+
+class TeamMember(models.Model):
+    name = models.CharField(max_length=150)
+    role = models.CharField(max_length=150)
+    image = models.ImageField(upload_to='team/')
+    linkedin_url = models.URLField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    
+    
+class JobOpening(models.Model):
+    title = models.CharField(max_length=255)
+    time_place = models.CharField(max_length=255, help_text="e.g. Full-time • Remote")
+    experience = models.CharField(max_length=100, help_text="e.g. 3+ years experience")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+    
+class Facility(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=255)
+    icon_name = models.CharField(max_length=100, help_text="Ionicons name (e.g., bulb-outline)")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+class Blog(models.Model):
+    image = models.ImageField(upload_to='blogs/')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __clstr__(self):
+        return self.question
+    
+class Term(models.Model):
+    title = models.CharField(max_length=255) # e.g., 1. Agreement to Terms
+    content = models.TextField()
+    order = models.PositiveIntegerField(default=0, help_text="Set order: 1, 2, 3...")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+    
+class PrivacyPolicy(models.Model):
+    title = models.CharField(max_length=255) # e.g., 1. Information We Collect
+    content = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+        

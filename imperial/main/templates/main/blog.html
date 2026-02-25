@@ -202,9 +202,27 @@
 
 <section class="blog">
   <div class="blog-box max-width">
+
+    {% for post in posts %}
+          <div class="blog-card reveal">
+            <div class="blog-img-box">
+              <img src="{{ post.image.url }}" alt="{{ post.title }}" />
+            </div>
+            <div class="blog-content">
+              <span class="blog-date">{{ post.date|date:"M d, Y" }}</span>
+              <h3 class="blog-title">{{ post.title }}</h3>
+              <p class="blog-desc">{{ post.description }}</p>
+              <a href="#" class="read-more">Read More &rarr;</a>
+            </div>
+          </div>
+          
+          {% endfor %}
     
     <div class="blog-card reveal">
       <div class="blog-img-box">
+
+        
+
         <img src="{% static 'images/material/blog/blog01.jpg' %}" alt="Wedding Trends" />
       </div>
       <div class="blog-content">
