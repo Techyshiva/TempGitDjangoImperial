@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Portfolio, Gallery, FeaturedEvent, Testimonial
+from main.models import EventBooking
+
 from .forms import PortfolioForm, GalleryForm, FeaturedEventForm, TestimonialForm
 
 # Create your views here.
@@ -132,3 +134,16 @@ def delete_testimonial(request, pk):
     obj = get_object_or_404(Testimonial, pk=pk)
     obj.delete()
     return redirect('admin_testimonials')
+
+
+# main/views.py
+def admin_bookings(request):
+    bookings = EventBooking.objects.all().order_by('-created_at')
+    return render(request, 'admin_bookings.html', {'bookings': bookings})
+
+# 3. DELETE: Remove a booking and refresh the page
+def delete_booking(request, pk):
+    booking = get_object_or_404(EventBooking, pk=pk)
+    booking.delete()
+    # Optional: messages.error(request, 'Booking deleted.')
+    return redirect('admin_bookings')
