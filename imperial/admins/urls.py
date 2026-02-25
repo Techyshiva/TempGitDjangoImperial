@@ -21,5 +21,8 @@ urlpatterns = [
     path('custom-admin/blog/', views.admin_blog, name='admin_blog'),
     path('custom-admin/blog/edit/<int:pk>/', views.admin_blog, name='edit_blog'),
     path('custom-admin/blog/delete/<int:pk>/', views.delete_blog, name='delete_blog'),
+    path('custom-admin/faq/', views.admin_faq, name='admin_faq'),
+    path('custom-admin/faq/edit/<int:pk>/', views.admin_faq, name='edit_faq'),
+    path('custom-admin/faq/delete/<int:pk>/', views.delete_faq, name='delete_faq'),
     
 ]

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility , Blog
+from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility , Blog,FAQ
 
 class PortfolioForm(forms.ModelForm):
 
@@ -80,4 +80,13 @@ class BlogForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'Blog Title'}),
             'description': forms.Textarea(attrs={'class': 'input-field', 'placeholder': 'Short description...', 'rows': 3}),
             'date': forms.DateInput(attrs={'class': 'input-field', 'type': 'date'}),
+        }
+    
+class FAQForm(forms.ModelForm):
+    class Meta:
+        model = FAQ
+        fields = ['question', 'answer']
+        widgets = {
+            'question': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'e.g., How far in advance should I book?'}),
+            'answer': forms.Textarea(attrs={'class': 'input-field', 'placeholder': 'Provide a detailed answer...', 'rows': 4}),
         }

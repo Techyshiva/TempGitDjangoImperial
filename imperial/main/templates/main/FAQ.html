@@ -112,6 +112,20 @@
 <section class="faq-section">
   <div class="faq-container max-width">
     <div class="faq-container-box reveal container-max-width">
+
+
+      {% for faq in faqs %}
+      <div class="faq">
+        <div class="question">
+          {{ faq.question }}
+          <span class="arrow"><ion-icon name="chevron-down-outline"></ion-icon></span>
+        </div>
+        <div class="answer">
+          {{ faq.answer }}
+        </div>
+      </div>
+      
+      {% endfor %}
       
       <div class="faq">
         <div class="question">
@@ -120,9 +134,9 @@
           <span class="arrow"><ion-icon name="chevron-down-outline"></ion-icon></span>
         </div>
         <div class="answer">
-          We recommend booking 6–12 months in advance for large events
+          We recommend booking 6-12 months in advance for large events
           such as weddings and destination events. For corporate or
-          private events, 3–6 months in advance is usually sufficient.
+          private events, 3-6 months in advance is usually sufficient.
           Early booking helps us secure the best venues and vendors for
           your event.
         </div>
