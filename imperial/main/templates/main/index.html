@@ -837,6 +837,30 @@
             </p>
           </div>
           <div class="featured-container reveal max-width">
+
+            {% for event in featured_events %}
+            <div class="featured-card">
+
+              <img src="{{ event.image.url }}" alt="{{ event.title }}" />
+
+              <div class="featured-card-overlay"></div>
+
+              <div class="featured-card-content">
+                <span class="featured-tag">
+                  {{ event.get_display_category }}
+                </span>
+
+                <h1 class="featured-card-content-primary">
+                  {{ event.title }}
+                </h1>
+
+                <p class="featured-card-content-teritiary">
+                  {{ event.guests }}+ Guests | {{ event.event_date|date:"d M Y" }}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+
             <div class="featured-card">
               <img src="{% static 'images/material/home/featured/featured1.png' %}" alt="" />
               
@@ -938,6 +962,23 @@
           </div>
           
           <div class="testimonial-cards reveal">
+            {% for t in testimonials %}
+            <div class="testimonial-card">
+              <div class="testimonial-stars" style="margin-bottom: 10px;">
+                {% for i in "12345"|slice:":t.stars"|make_list %}
+                    <ion-icon name="star" style="color: #fbb034;"></ion-icon>
+                {% endfor %}
+            </div>
+              <p class="testimonial-text">"{{ t.text }}"</p>
+              <div class="testimonial-user">
+                <img src="{{ t.image.url }}" alt="{{ t.name }}" />
+                <div>
+                  <h4>{{ t.name }}</h4>
+                  <span>{{ t.role }}</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
             <!-- Card 1 -->
             <div class="testimonial-card">
               <div class="testimonial-stars">

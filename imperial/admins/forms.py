@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility , Blog,FAQ,Term,PrivacyPolicy
+from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility , Blog,FAQ,Term,PrivacyPolicy, FeaturedEvent, Testimonial
 
 class PortfolioForm(forms.ModelForm):
 
@@ -108,4 +108,43 @@ class PrivacyPolicyForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'e.g., 1. Information We Collect'}),
             'content': forms.Textarea(attrs={'class': 'input-field', 'placeholder': 'Policy details...', 'rows': 5}),
             'order': forms.NumberInput(attrs={'class': 'input-field'}),
+        }
+class FeaturedEventForm(forms.ModelForm):
+
+    class Meta:
+        model = FeaturedEvent
+        fields = [
+            'title',
+            'category',
+            'custom_category',
+            'guests',
+            'event_date',
+            'image',
+            'is_active'
+        ]
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'input-field'}),
+            'category': forms.Select(attrs={'class': 'input-field'}),
+            'custom_category': forms.TextInput(attrs={'class': 'input-field'}),
+            'guests': forms.NumberInput(attrs={'class': 'input-field'}),
+            'event_date': forms.DateInput(attrs={
+                'class': 'input-field',
+                'type': 'date'
+            }),
+            'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'checkbox-field'}),
+        }
+        
+
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = ['name', 'role', 'text', 'image', 'stars']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'input-field'}),
+            'role': forms.TextInput(attrs={'class': 'input-field'}),
+            'text': forms.Textarea(attrs={'class': 'input-field', 'rows': 4}),
+            'image': forms.ClearableFileInput(attrs={'class': 'input-field'}),
+            'stars': forms.NumberInput(attrs={'class': 'input-field', 'min': 1, 'max': 5}),
         }

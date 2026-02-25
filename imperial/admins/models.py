@@ -64,6 +64,32 @@ class JobOpening(models.Model):
     time_place = models.CharField(max_length=255, help_text="e.g. Full-time • Remote")
     experience = models.CharField(max_length=100, help_text="e.g. 3+ years experience")
     created_at = models.DateTimeField(auto_now_add=True)
+    
+class FeaturedEvent(models.Model):
+
+    CATEGORY_CHOICES = [
+        ('wedding', 'Wedding'),
+        ('corporate', 'Corporate'),
+        ('social', 'Social'),
+        ('custom', 'Custom'),
+    ]
+
+    title = models.CharField(max_length=200)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    custom_category = models.CharField(max_length=100, blank=True, null=True)
+
+    guests = models.IntegerField()
+    event_date = models.DateField()
+
+    image = models.ImageField(upload_to='featured_events/')
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_display_category(self):
+        if self.category == "custom" and self.custom_category:
+            return self.custom_category
+        return dict(self.CATEGORY_CHOICES).get(self.category)
 
     def __str__(self):
         return self.title
@@ -116,3 +142,14 @@ class PrivacyPolicy(models.Model):
         return self.title
     
         
+# Testimonial
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100, blank=True)
+    text = models.TextField()
+    image = models.ImageField(upload_to='testimonials/')
+    stars = models.PositiveSmallIntegerField(default=5)  # 1 to 5
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

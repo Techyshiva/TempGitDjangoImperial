@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from admins.models import Portfolio, Gallery, TeamMember, JobOpening,Facility,Blog,FAQ,Term,PrivacyPolicy
+from django.shortcuts import render, redirect
+from admins.models import Portfolio, Gallery, FeaturedEvent, Testimonial
+from main.models import EventBooking, ContactEnquiry
 # Create your views here.
 def home(request):
-    return render(request, "main/index.html")
+    featured_events = FeaturedEvent.objects.filter(is_active=True).order_by('-created_at')
+    testimonials = Testimonial.objects.all().order_by('-created_at')
 
+    return render(request, "main/index.html", {
+        "featured_events": featured_events,
+        "testimonials": testimonials,
+    })
 def about(request):
     team_members = TeamMember.objects.filter(is_active=True).order_by('-created_at')
 
@@ -24,7 +32,17 @@ def career_page(request):
 
 
 def contact(request):
-    return render(request, "main/contact.html")
+    if request.method == 'POST':
+        ContactEnquiry.objects.create(
+            name=request.POST.get('name'),
+            email=request.POST.get('email'),
+            event_type=request.POST.get('event_type'),
+            message=request.POST.get('message')
+        )
+        # Change 'contact' to whatever your page URL name is
+        return redirect('contact') 
+
+    return render(request, 'main/contact.html')
 
 def corporate(request):
     return render(request, "main/corporate.html")
@@ -48,7 +66,25 @@ def gallery(request):
     return render(request, "main/gallery.html", {'images': images})
 
 def plan_event(request):
-    return render(request, "main/plan-event.html")
+    if request.method == "POST":
+        try:
+            EventBooking.objects.create(
+                event_type=request.POST.get('event_type'),
+                event_date=request.POST.get('event_date'),
+                event_city=request.POST.get('event_city'),
+                expected_guests=request.POST.get('expected_guests'),
+                event_budget=request.POST.get('event_budget'),
+                full_name=request.POST.get('full_name'),
+                email=request.POST.get('email'),
+                mobile_number=request.POST.get('mobile_number'),
+                additional_info=request.POST.get('additional_info')
+            )
+            return redirect('plan_event') 
+            
+        except Exception as e:
+            return redirect('plan_event')
+
+    return render(request, 'main/plan-event.html')
 
 def privacy(request):
     policies = PrivacyPolicy.objects.all().order_by('order')
@@ -76,3 +112,4 @@ def themes(request):
 
 def wedding(request):
     return render(request, "main/wedding.html")
+
