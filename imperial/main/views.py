@@ -91,7 +91,7 @@ def privacy(request):
     return render(request, "main/privacy.html", {'policies': policies})
 
 def product_launch(request):
-    return render(request, "main/product_launch.html")
+    return render(request, "main/product-launch.html")
 
 def portfolio(request):
     portfolios = Portfolio.objects.all().order_by('-created_at')
@@ -101,7 +101,7 @@ def services(request):
     return render(request, "main/services.html")
 
 def social_events(request):
-    return render(request, "main/social_events.html")
+    return render(request, "main/social-events.html")
 
 def terms(request):
     terms_list = Term.objects.all().order_by('-order')
