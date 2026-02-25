@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Portfolio, Gallery, FeaturedEvent, Testimonial
-from main.models import EventBooking
+from main.models import EventBooking, ContactEnquiry
 
 from .forms import PortfolioForm, GalleryForm, FeaturedEventForm, TestimonialForm
 
@@ -147,3 +147,15 @@ def delete_booking(request, pk):
     booking.delete()
     # Optional: messages.error(request, 'Booking deleted.')
     return redirect('admin_bookings')
+
+
+
+def admin_inquiry(request):
+    contact_msgs = ContactEnquiry.objects.all().order_by('-created_at')
+    return render(request, 'admin_inquiry.html', {'contact_msgs': contact_msgs})
+
+# 3. DELETE: Remove a message
+def delete_inquiry(request, pk):
+    msg = get_object_or_404(ContactEnquiry, pk=pk)
+    msg.delete()
+    return redirect('admin_inquiry')

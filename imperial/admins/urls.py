@@ -20,5 +20,7 @@ urlpatterns = [
     path('custom-admin/testimonials/delete/<int:pk>/', views.delete_testimonial, name='delete_testimonial'),
     path('custom-admin/bookings/', views.admin_bookings, name='admin_booking'),
     path('custom-admin/bookings/delete/<int:pk>/', views.delete_booking, name='delete_booking'),
+    path('custom-admin/inquiry/', views.admin_inquiry, name='admin_inquiry'),
+    path('custom-admin/inquiry/delete/<int:pk>/', views.delete_inquiry, name='delete_inquiry'),
     
 ]

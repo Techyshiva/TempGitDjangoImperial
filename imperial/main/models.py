@@ -22,3 +22,17 @@ class EventBooking(models.Model):
 
     def __str__(self):
         return f"{self.full_name} - {self.event_type} ({self.event_date})"
+      
+      
+class ContactEnquiry(models.Model):
+    name = models.CharField(max_length=150)
+    email = models.EmailField()
+    event_type = models.CharField(max_length=100, blank=True, null=True)
+    message = models.TextField()
+    
+    # Admin Data
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.name} - {self.email}"

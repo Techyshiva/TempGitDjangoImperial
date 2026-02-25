@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from admins.models import Portfolio, Gallery, FeaturedEvent, Testimonial
-from main.models import EventBooking
+from main.models import EventBooking, ContactEnquiry
 # Create your views here.
 def home(request):
     featured_events = FeaturedEvent.objects.filter(is_active=True).order_by('-created_at')
@@ -20,7 +20,17 @@ def career(request):
     return render(request, "main/carrer.html")
 
 def contact(request):
-    return render(request, "main/contact.html")
+    if request.method == 'POST':
+        ContactEnquiry.objects.create(
+            name=request.POST.get('name'),
+            email=request.POST.get('email'),
+            event_type=request.POST.get('event_type'),
+            message=request.POST.get('message')
+        )
+        # Change 'contact' to whatever your page URL name is
+        return redirect('contact') 
+
+    return render(request, 'main/contact.html')
 
 def corporate(request):
     return render(request, "main/corporate.html")
@@ -43,9 +53,6 @@ def gallery(request):
 
 def plan_event(request):
     if request.method == "POST":
-        print("\n🟢 ------------- FORM SUBMITTED ------------- 🟢")
-        print(request.POST) # This prints the raw data to your terminal
-        
         try:
             EventBooking.objects.create(
                 event_type=request.POST.get('event_type'),
@@ -58,13 +65,9 @@ def plan_event(request):
                 mobile_number=request.POST.get('mobile_number'),
                 additional_info=request.POST.get('additional_info')
             )
-            print("🟢 DATABASE SAVE SUCCESSFUL!")
-            messages.success(request, "Success! Your event details have been sent.")
             return redirect('plan_event') 
             
         except Exception as e:
-            print(f"🔴 DATABASE ERROR: {e}")
-            messages.error(request, "Something went wrong saving your data.")
             return redirect('plan_event')
 
     return render(request, 'main/plan-event.html')
@@ -93,11 +96,4 @@ def themes(request):
 
 def wedding(request):
     return render(request, "main/wedding.html")
-
-
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import EventBooking
 
