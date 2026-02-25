@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Portfolio, Gallery,TeamMember,JobOpening,Facility ,Blog, FAQ
-from .forms import PortfolioForm, GalleryForm, TeamMemberForm, JobOpeningForm, FacilityForm, BlogForm, FAQForm
+from .models import Portfolio, Gallery,TeamMember,JobOpening,Facility ,Blog, FAQ, Term,PrivacyPolicy
+from .forms import PortfolioForm, GalleryForm, TeamMemberForm, JobOpeningForm, FacilityForm, BlogForm, FAQForm, TermForm, PrivacyPolicyForm
 
 # Create your views here.
 def admin_home(request):
@@ -217,3 +217,51 @@ def delete_faq(request, pk):
     faq = get_object_or_404(FAQ, pk=pk)
     faq.delete()
     return redirect('admin_faq')
+
+
+def admin_terms(request, pk=None):
+    terms_list = Term.objects.all().order_by('order')
+    term_obj = get_object_or_404(Term, pk=pk) if pk else None
+
+    if request.method == 'POST':
+        form = TermForm(request.POST, instance=term_obj)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_terms')
+    else:
+        form = TermForm(instance=term_obj)
+
+    return render(request, 'terms_admin.html', {
+        'form': form,
+        'terms_list': terms_list,
+        'edit_mode': True if pk else False
+    })
+
+def delete_term(request, pk):
+    term = get_object_or_404(Term, pk=pk)
+    term.delete()
+    return redirect('admin_terms')
+
+
+def admin_privacy(request, pk=None):
+    policies = PrivacyPolicy.objects.all().order_by('order')
+    policy_obj = get_object_or_404(PrivacyPolicy, pk=pk) if pk else None
+
+    if request.method == 'POST':
+        form = PrivacyPolicyForm(request.POST, instance=policy_obj)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_privacy')
+    else:
+        form = PrivacyPolicyForm(instance=policy_obj)
+
+    return render(request, 'privacy_admin.html', {
+        'form': form,
+        'policies': policies,
+        'edit_mode': True if pk else False
+    })
+
+def delete_privacy(request, pk):
+    policy = get_object_or_404(PrivacyPolicy, pk=pk)
+    policy.delete()
+    return redirect('admin_privacy')

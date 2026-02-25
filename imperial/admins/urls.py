@@ -24,5 +24,12 @@ urlpatterns = [
     path('custom-admin/faq/', views.admin_faq, name='admin_faq'),
     path('custom-admin/faq/edit/<int:pk>/', views.admin_faq, name='edit_faq'),
     path('custom-admin/faq/delete/<int:pk>/', views.delete_faq, name='delete_faq'),
+    path('custom-admin/terms/', views.admin_terms, name='admin_terms'),
+    path('custom-admin/terms/edit/<int:pk>/', views.admin_terms, name='edit_term'),
+    path('custom-admin/terms/delete/<int:pk>/', views.delete_term, name='delete_term'),
+    
+    path('custom-admin/privacy/', views.admin_privacy, name='admin_privacy'),
+    path('custom-admin/privacy/edit/<int:pk>/', views.admin_privacy, name='edit_privacy'),
+    path('custom-admin/privacy/delete/<int:pk>/', views.delete_privacy, name='delete_privacy'),
     
 ]

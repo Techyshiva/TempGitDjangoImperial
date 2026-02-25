@@ -101,6 +101,20 @@
 <section class="privacy-policy">
   <div class="privacy-container reveal max-width">
     <div class="privacy-container-box">
+
+      {% if policies %}
+        <p class="privacy-update-date">Last updated: {{ policies.0.created_at|date:"F d, Y" }}</p>
+      
+      {% endif %}
+
+      {% for p in policies %}
+      <div class="privacy-box-point">
+        <h1>{{ p.title }}</h1>
+        <p>{{ p.content }}</p>
+      </div>
+      
+      {% endfor %}
+
       <p class="privacy-update-date">Last updated: January 29, 2026</p>
 
       <div class="privacy-box-point">

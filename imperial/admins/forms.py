@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility , Blog,FAQ
+from .models import Portfolio, Gallery, TeamMember , JobOpening,Facility , Blog,FAQ,Term,PrivacyPolicy
 
 class PortfolioForm(forms.ModelForm):
 
@@ -89,4 +89,23 @@ class FAQForm(forms.ModelForm):
         widgets = {
             'question': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'e.g., How far in advance should I book?'}),
             'answer': forms.Textarea(attrs={'class': 'input-field', 'placeholder': 'Provide a detailed answer...', 'rows': 4}),
+        }
+        
+class TermForm(forms.ModelForm):
+    class Meta:
+        model = Term
+        fields = ['title', 'content', 'order']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'e.g., 1. Agreement to Terms'}),
+            'content': forms.Textarea(attrs={'class': 'input-field', 'placeholder': 'Detailed legal text...', 'rows': 5}),
+            'order': forms.NumberInput(attrs={'class': 'input-field'}),
+        }
+class PrivacyPolicyForm(forms.ModelForm):
+    class Meta:
+        model = PrivacyPolicy
+        fields = ['title', 'content', 'order']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'e.g., 1. Information We Collect'}),
+            'content': forms.Textarea(attrs={'class': 'input-field', 'placeholder': 'Policy details...', 'rows': 5}),
+            'order': forms.NumberInput(attrs={'class': 'input-field'}),
         }

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from admins.models import Portfolio, Gallery, TeamMember, JobOpening,Facility,Blog,FAQ
+from admins.models import Portfolio, Gallery, TeamMember, JobOpening,Facility,Blog,FAQ,Term,PrivacyPolicy
 # Create your views here.
 def home(request):
     return render(request, "main/index.html")
@@ -51,7 +51,8 @@ def plan_event(request):
     return render(request, "main/plan-event.html")
 
 def privacy(request):
-    return render(request, "main/privacy.html")
+    policies = PrivacyPolicy.objects.all().order_by('order')
+    return render(request, "main/privacy.html", {'policies': policies})
 
 def product_launch(request):
     return render(request, "main/product_launch.html")
@@ -67,7 +68,8 @@ def social_events(request):
     return render(request, "main/social_events.html")
 
 def terms(request):
-    return render(request, "main/terms.html")
+    terms_list = Term.objects.all().order_by('-order')
+    return render(request, "main/terms.html", {'terms_list': terms_list})
 
 def themes(request):
     return render(request, "main/themes.html")

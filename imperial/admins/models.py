@@ -96,4 +96,23 @@ class FAQ(models.Model):
     def __clstr__(self):
         return self.question
     
+class Term(models.Model):
+    title = models.CharField(max_length=255) # e.g., 1. Agreement to Terms
+    content = models.TextField()
+    order = models.PositiveIntegerField(default=0, help_text="Set order: 1, 2, 3...")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+    
+class PrivacyPolicy(models.Model):
+    title = models.CharField(max_length=255) # e.g., 1. Information We Collect
+    content = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
         
